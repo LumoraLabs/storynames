@@ -1,7 +1,7 @@
 //SPDX-License-Identifier: MIT
 pragma solidity ^0.8.23;
 
-import "src/L2/interface/IDiscountValidator.sol";
+import "src/contract/interface/IDiscountValidator.sol";
 
 contract MockDiscountValidator is IDiscountValidator {
     bool returnValue = true;

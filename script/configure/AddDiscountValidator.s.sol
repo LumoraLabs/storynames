@@ -2,7 +2,7 @@
 pragma solidity ^0.8.23;
 
 import "forge-std/Script.sol";
-import {RegistrarController} from "src/L2/RegistrarController.sol";
+import {RegistrarController} from "src/contract/RegistrarController.sol";
 
 contract AddDiscountValidator is Script {
     function run() external {

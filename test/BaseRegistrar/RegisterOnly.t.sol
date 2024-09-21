@@ -1,7 +1,7 @@
 //SPDX-License-Identifier: MIT
 pragma solidity ^0.8.23;
 
-import {BaseRegistrar} from "src/L2/BaseRegistrar.sol";
+import {StoryRegistrar} from "src/contract/StoryRegistrar.sol";
 import {BaseRegistrarBase} from "./BaseRegistrarBase.t.sol";
 import {ERC721} from "lib/solady/src/tokens/ERC721.sol";
 import {BASE_ETH_NODE, GRACE_PERIOD} from "src/util/Constants.sol";
@@ -11,13 +11,13 @@ contract RegisterOnly is BaseRegistrarBase {
     function test_reverts_whenTheRegistrarIsNotLive() public {
         vm.prank(address(baseRegistrar));
         registry.setOwner(BASE_ETH_NODE, owner);
-        vm.expectRevert(BaseRegistrar.RegistrarNotLive.selector);
+        vm.expectRevert(StoryRegistrar.RegistrarNotLive.selector);
         baseRegistrar.registerOnly(id, user, duration);
     }
 
     function test_reverts_whenCalledByNonController(address caller) public {
         vm.prank(caller);
-        vm.expectRevert(BaseRegistrar.OnlyController.selector);
+        vm.expectRevert(StoryRegistrar.OnlyController.selector);
         baseRegistrar.registerOnly(id, user, duration);
     }
 
@@ -27,7 +27,7 @@ contract RegisterOnly is BaseRegistrarBase {
         vm.expectEmit(address(baseRegistrar));
         emit ERC721.Transfer(address(0), user, id);
         vm.expectEmit(address(baseRegistrar));
-        emit BaseRegistrar.NameRegistered(id, user, duration + blockTimestamp);
+        emit StoryRegistrar.NameRegistered(id, user, duration + blockTimestamp);
 
         vm.warp(blockTimestamp);
         vm.prank(controller);
@@ -52,7 +52,7 @@ contract RegisterOnly is BaseRegistrarBase {
         vm.expectEmit(address(baseRegistrar));
         emit ERC721.Transfer(address(0), newOwner, id);
         vm.expectEmit(address(baseRegistrar));
-        emit BaseRegistrar.NameRegistered(id, newOwner, duration + newBlockTimestamp);
+        emit StoryRegistrar.NameRegistered(id, newOwner, duration + newBlockTimestamp);
 
         vm.warp(newBlockTimestamp);
         vm.prank(controller);
@@ -70,7 +70,7 @@ contract RegisterOnly is BaseRegistrarBase {
         vm.prank(controller);
         baseRegistrar.registerOnly(id, user, duration);
 
-        vm.expectRevert(abi.encodeWithSelector(BaseRegistrar.NotAvailable.selector, id));
+        vm.expectRevert(abi.encodeWithSelector(StoryRegistrar.NotAvailable.selector, id));
         vm.prank(controller);
         baseRegistrar.registerOnly(id, newOwner, duration);
     }
@@ -82,7 +82,7 @@ contract RegisterOnly is BaseRegistrarBase {
         vm.prank(controller);
         baseRegistrar.registerOnly(id, user, duration);
 
-        vm.expectRevert(abi.encodeWithSelector(BaseRegistrar.NotAvailable.selector, id));
+        vm.expectRevert(abi.encodeWithSelector(StoryRegistrar.NotAvailable.selector, id));
         vm.warp(blockTimestamp + duration + GRACE_PERIOD - 1);
         vm.prank(controller);
         baseRegistrar.registerOnly(id, newOwner, duration);

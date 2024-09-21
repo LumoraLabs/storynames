@@ -2,7 +2,7 @@
 pragma solidity ^0.8.23;
 
 import {L2ResolverBase} from "./L2ResolverBase.t.sol";
-import {L2Resolver} from "src/L2/L2Resolver.sol";
+import {StoryResolver} from "src/contract/StoryResolver.sol";
 import {BASE_ETH_NODE} from "src/util/Constants.sol";
 
 // Because isAuthorized() is an internal method, we test it indirectly here by using `setAddr()` which

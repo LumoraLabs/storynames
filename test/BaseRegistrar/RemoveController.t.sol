@@ -1,7 +1,7 @@
 //SPDX-License-Identifier: MIT
 pragma solidity ^0.8.23;
 
-import {BaseRegistrar} from "src/L2/BaseRegistrar.sol";
+import {StoryRegistrar} from "src/contract/StoryRegistrar.sol";
 import {BaseRegistrarBase} from "./BaseRegistrarBase.t.sol";
 import {Ownable} from "solady/auth/Ownable.sol";
 
@@ -12,7 +12,7 @@ contract RemoveController is BaseRegistrarBase {
         assertTrue(baseRegistrar.controllers(controller));
 
         vm.expectEmit();
-        emit BaseRegistrar.ControllerRemoved(controller);
+        emit StoryRegistrar.ControllerRemoved(controller);
         vm.prank(owner);
         baseRegistrar.removeController(controller);
         assertFalse(baseRegistrar.controllers(controller));

@@ -2,8 +2,8 @@
 pragma solidity ^0.8.23;
 
 import {Test} from "forge-std/Test.sol";
-import {ReverseRegistrar} from "src/L2/ReverseRegistrar.sol";
-import {Registry} from "src/L2/Registry.sol";
+import {ReverseRegistrar} from "src/contract/ReverseRegistrar.sol";
+import {Registry} from "src/contract/Registry.sol";
 import {ENS} from "ens-contracts/registry/ENS.sol";
 import {ETH_NODE, REVERSE_NODE, BASE_REVERSE_NODE} from "src/util/Constants.sol";
 

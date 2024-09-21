@@ -3,8 +3,8 @@ pragma solidity ^0.8.23;
 
 import "forge-std/Script.sol";
 
-import {Registry} from "src/L2/Registry.sol";
-import {ReverseRegistrar} from "src/L2/ReverseRegistrar.sol";
+import {Registry} from "src/contract/Registry.sol";
+import {ReverseRegistrar} from "src/contract/ReverseRegistrar.sol";
 import "src/util/Constants.sol";
 
 contract DeployReverseRegistrar is Script {
@@ -19,14 +19,14 @@ contract DeployReverseRegistrar is Script {
         ReverseRegistrar revRegstrar = new ReverseRegistrar(
             Registry(ensAddress),
             deployerAddress, // deployer as owner
-            BASE_REVERSE_NODE
+            IP_REVERSE_NODE
         );
 
-        // establish the reverse registrar as the owner of the 'addr.reverse' node
+        // establish the reverse registrar as the owner of the 'ip.reverse' node
         bytes32 reverseLabel = keccak256("reverse");
-        bytes32 baseReverseLabel = keccak256("80002105");
+        bytes32 storyReverseLabel = keccak256("ip");
         registry.setSubnodeOwner(0x0, reverseLabel, deployerAddress);
-        registry.setSubnodeOwner(REVERSE_NODE, baseReverseLabel, address(revRegstrar));
+        registry.setSubnodeOwner(REVERSE_NODE, storyReverseLabel, address(revRegstrar));
 
         console.log(address(revRegstrar));
 

@@ -2,7 +2,7 @@
 pragma solidity ^0.8.23;
 
 import "forge-std/Script.sol";
-import {CBIdDiscountValidator} from "src/L2/discounts/CBIdDiscountValidator.sol";
+import {CBIdDiscountValidator} from "src/contract/discounts/CBIdDiscountValidator.sol";
 
 contract DeployCBIDDiscountValidator is Script {
     function run() external {

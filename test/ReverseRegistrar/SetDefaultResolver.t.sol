@@ -4,7 +4,7 @@ pragma solidity ^0.8.23;
 import {NameResolver} from "ens-contracts/resolvers/profiles/NameResolver.sol";
 import {Ownable} from "solady/auth/Ownable.sol";
 import {ReverseRegistrarBase} from "./ReverseRegistrarBase.t.sol";
-import {ReverseRegistrar} from "src/L2/ReverseRegistrar.sol";
+import {ReverseRegistrar} from "src/contract/ReverseRegistrar.sol";
 
 contract SetDefaultResolver is ReverseRegistrarBase {
     function test_reverts_whenCalledByNonOwner(address caller) public {

@@ -2,8 +2,8 @@
 pragma solidity ^0.8.23;
 
 import "forge-std/Script.sol";
-import {BaseRegistrar} from "src/L2/BaseRegistrar.sol";
-import {ReverseRegistrar} from "src/L2/ReverseRegistrar.sol";
+import {StoryRegistrar} from "src/contract/StoryRegistrar.sol";
+import {ReverseRegistrar} from "src/contract/ReverseRegistrar.sol";
 
 contract EstablishController is Script {
     function run() external {
@@ -12,7 +12,7 @@ contract EstablishController is Script {
 
         address base = vm.envAddress("BASE_REGISTRAR_ADDR");
         address controller = vm.envAddress("REGISTRAR_CONTROLLER_ADDR");
-        BaseRegistrar(base).addController(controller);
+        StoryRegistrar(base).addController(controller);
 
         address reverse = vm.envAddress("REVERSE_REGISTRAR_ADDR");
         ReverseRegistrar(reverse).setControllerApproval(controller, true);

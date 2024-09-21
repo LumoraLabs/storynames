@@ -1,7 +1,7 @@
 //SPDX-License-Identifier: MIT
 pragma solidity ^0.8.23;
 
-import {BaseRegistrar} from "src/L2/BaseRegistrar.sol";
+import {StoryRegistrar} from "src/contract/StoryRegistrar.sol";
 import {BaseRegistrarBase} from "./BaseRegistrarBase.t.sol";
 
 contract OwnerOf is BaseRegistrarBase {
@@ -10,7 +10,7 @@ contract OwnerOf is BaseRegistrarBase {
         uint256 expires = _registerName(label, user, duration);
 
         vm.warp(expires + 1);
-        vm.expectRevert(abi.encodeWithSelector(BaseRegistrar.Expired.selector, id));
+        vm.expectRevert(abi.encodeWithSelector(StoryRegistrar.Expired.selector, id));
         baseRegistrar.ownerOf(id);
     }
 

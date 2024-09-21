@@ -10,18 +10,18 @@ import {LibString} from "solady/utils/LibString.sol";
 
 import {GRACE_PERIOD} from "src/util/Constants.sol";
 
-/// @title Base Registrar
+/// @title Story Registrar
 ///
-/// @notice The base-level tokenization contract for an ens domain. The Base Registrar implements ERC721 and, as the owner
-///         of a 2LD, can mint and assign ownership rights to its subdomains. I.e. This contract owns "base.eth" and allows
-///         users to mint subdomains like "vitalik.base.eth". Registration is delegated to "controller" contracts which have
+/// @notice The base-level tokenization contract for an ens domain. The Story Registrar implements ERC721 and, as the owner
+///         of a TLD, can mint and assign ownership rights to its subdomains. I.e. This contract owns "ip" and allows
+///         users to mint subdomains like "vitalik.ip". Registration is delegated to "controller" contracts which have
 ///         rights to call `onlyController` protected methods.
 ///
 ///         The implementation is heavily inspired by the original ENS BaseRegistrarImplementation contract:
 ///         https://github.com/ensdomains/ens-contracts/blob/staging/contracts/ethregistrar/BaseRegistrarImplementation.sol
 ///
 /// @author Coinbase (https://github.com/base-org/usernames)
-contract BaseRegistrar is ERC721, Ownable {
+contract StoryRegistrar is ERC721, Ownable {
     using LibString for uint256;
 
     /*´:°•.°+.*•´.*:˚.°*.˚•´.°:°•.°•.*•´.*:˚.°*.˚•´.°:°•.°+.*•´.*:*/
@@ -348,12 +348,12 @@ contract BaseRegistrar is ERC721, Ownable {
 
     /// @dev Returns the token collection name.
     function name() public pure override returns (string memory) {
-        return "Basenames";
+        return "Storynames";
     }
 
     /// @dev Returns the token collection symbol.
     function symbol() public pure override returns (string memory) {
-        return "BASENAME";
+        return "STORYNAME";
     }
 
     /// @notice Returns the Uniform Resource Identifier (URI) for token `id`.

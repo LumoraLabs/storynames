@@ -3,7 +3,7 @@ pragma solidity ~0.8.17;
 
 import {StringUtils} from "ens-contracts/ethregistrar/StringUtils.sol";
 
-import {IPriceOracle} from "src/L2/interface/IPriceOracle.sol";
+import {IPriceOracle} from "src/contract/interface/IPriceOracle.sol";
 
 /// @title Stable Pricing Oracle
 ///

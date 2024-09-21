@@ -8,16 +8,16 @@ import {SafeERC20} from "openzeppelin-contracts/contracts/token/ERC20/utils/Safe
 import {StringUtils} from "ens-contracts/ethregistrar/StringUtils.sol";
 
 import {BASE_ETH_NODE, GRACE_PERIOD} from "src/util/Constants.sol";
-import {BaseRegistrar} from "./BaseRegistrar.sol";
+import {StoryRegistrar} from "./StoryRegistrar.sol";
 import {IDiscountValidator} from "./interface/IDiscountValidator.sol";
 import {IPriceOracle} from "./interface/IPriceOracle.sol";
-import {L2Resolver} from "./L2Resolver.sol";
+import {StoryResolver} from "./StoryResolver.sol";
 import {IReverseRegistrar} from "./interface/IReverseRegistrar.sol";
 
-/// @title Registrar Controller
+/// @title Early Access Registrar Controller
 ///
-/// @notice A permissioned controller for managing registering and renewing names against the `base` registrar.
-///         This contract enables a `discountedRegister` flow which is validated by calling external implementations
+/// @notice A permissioned controller for managing registering names against the `base` registrar.
+///         This contract enables only a `discountedRegister` flow which is validated by calling external implementations
 ///         of the `IDiscountValidator` interface. Pricing, denominated in wei, is determined by calling out to a
 ///         contract that implements `IPriceOracle`.
 ///
@@ -25,7 +25,7 @@ import {IReverseRegistrar} from "./interface/IReverseRegistrar.sol";
 ///         https://github.com/ensdomains/ens-contracts/blob/staging/contracts/ethregistrar/ETHRegistrarController.sol
 ///
 /// @author Coinbase (https://github.com/base-org/usernames)
-contract RegistrarController is Ownable {
+contract EARegistrarController is Ownable {
     using StringUtils for *;
     using SafeERC20 for IERC20;
     using EnumerableSetLib for EnumerableSetLib.Bytes32Set;
@@ -62,8 +62,8 @@ contract RegistrarController is Ownable {
     /*                          STORAGE                           */
     /*.•°:°.´+˚.*°.˚:*.´•*.+°.•°:´*.´•*.•°.•°:°.´:•˚°.*°.˚:*.´+°.•*/
 
-    /// @notice The implementation of the `BaseRegistrar`.
-    BaseRegistrar immutable base;
+    /// @notice The implementation of the `StoryRegistrar`.
+    StoryRegistrar immutable base;
 
     /// @notice The implementation of the pricing oracle.
     IPriceOracle public prices;
@@ -83,9 +83,6 @@ contract RegistrarController is Ownable {
     /// @notice The address that will receive ETH funds upon `withdraw()` being called.
     address public paymentReceiver;
 
-    /// @notice The timestamp of "go-live". Used for setting at-launch pricing premium.
-    uint256 public launchTime;
-
     /// @notice Each discount is stored against a unique 32-byte identifier, i.e. keccak256("test.discount.validator").
     mapping(bytes32 key => DiscountDetails details) public discounts;
 
@@ -97,7 +94,7 @@ contract RegistrarController is Ownable {
     /*.•°:°.´+˚.*°.˚:*.´•*.+°.•°:´*.´•*.•°.•°:°.´:•˚°.*°.˚:*.´+°.•*/
 
     /// @notice The minimum registration duration, specified in seconds.
-    uint256 public constant MIN_REGISTRATION_DURATION = 365 days;
+    uint256 public constant MIN_REGISTRATION_DURATION = 28 days;
 
     /// @notice The minimum name length.
     uint256 public constant MIN_NAME_LENGTH = 3;
@@ -179,13 +176,6 @@ contract RegistrarController is Ownable {
     /// @param expires The date that the registration expires.
     event NameRegistered(string name, bytes32 indexed label, address indexed owner, uint256 expires);
 
-    /// @notice Emitted when a name is renewed.
-    ///
-    /// @param name The name that was renewed.
-    /// @param label The hashed label of the name.
-    /// @param expires The date that the renewed name expires.
-    event NameRenewed(string name, bytes32 indexed label, uint256 expires);
-
     /// @notice Emitted when the payment receiver is updated.
     ///
     /// @param newPaymentReceiver The address of the new payment receiver.
@@ -260,8 +250,6 @@ contract RegistrarController is Ownable {
 
     /// @notice Registrar Controller construction sets all of the requisite external contracts.
     ///
-    /// @dev Assigns ownership of this contract's reverse record to the `owner_`.
-    ///
     /// @param base_ The base registrar contract.
     /// @param prices_ The pricing oracle contract.
     /// @param reverseRegistrar_ The reverse registrar contract.
@@ -269,7 +257,7 @@ contract RegistrarController is Ownable {
     /// @param rootNode_ The node for which this registrar manages registrations.
     /// @param rootName_ The name of the root node which this registrar manages.
     constructor(
-        BaseRegistrar base_,
+        StoryRegistrar base_,
         IPriceOracle prices_,
         IReverseRegistrar reverseRegistrar_,
         address owner_,
@@ -284,7 +272,6 @@ contract RegistrarController is Ownable {
         rootName = rootName_;
         paymentReceiver = paymentReceiver_;
         _initializeOwner(owner_);
-        reverseRegistrar.claim(owner_);
     }
 
     /// @notice Allows the `owner` to set discount details for a specified `key`.
@@ -322,13 +309,6 @@ contract RegistrarController is Ownable {
     function setReverseRegistrar(IReverseRegistrar reverse_) external onlyOwner {
         reverseRegistrar = reverse_;
         emit ReverseRegistrarUpdated(address(reverse_));
-    }
-
-    /// @notice Allows the `owner` to set the stored `launchTime`.
-    ///
-    /// @param launchTime_ The new launch time timestamp.
-    function setLaunchTime(uint256 launchTime_) external onlyOwner {
-        launchTime = launchTime_;
     }
 
     /// @notice Allows the `owner` to set the reverse registrar contract.
@@ -383,7 +363,7 @@ contract RegistrarController is Ownable {
     /// @return price The `Price` tuple containing the base and premium prices respectively, denominated in wei.
     function rentPrice(string memory name, uint256 duration) public view returns (IPriceOracle.Price memory price) {
         bytes32 label = keccak256(bytes(name));
-        price = prices.price(name, _getExpiry(uint256(label)), duration);
+        price = prices.price(name, base.nameExpires(uint256(label)) + GRACE_PERIOD, duration);
     }
 
     /// @notice Checks the register price for a provided `name` and `duration`.
@@ -429,22 +409,6 @@ contract RegistrarController is Ownable {
         return activeDiscountDetails;
     }
 
-    /// @notice Enables a caller to register a name.
-    ///
-    /// @dev Validates the registration details via the `validRegistration` modifier.
-    ///     This `payable` method must receive appropriate `msg.value` to pass `_validatePayment()`.
-    ///
-    /// @param request The `RegisterRequest` struct containing the details for the registration.
-    function register(RegisterRequest calldata request) public payable validRegistration(request) {
-        uint256 price = registerPrice(request.name, request.duration);
-
-        _validatePayment(price);
-
-        _register(request);
-
-        _refundExcessEth(price);
-    }
-
     /// @notice Enables a caller to register a name and apply a discount.
     ///
     /// @dev In addition to the validation performed for in a `register` request, this method additionally validates
@@ -474,29 +438,6 @@ contract RegistrarController is Ownable {
         emit DiscountApplied(msg.sender, discountKey);
     }
 
-    /// @notice Allows a caller to renew a name for a specified duration.
-    ///
-    /// @dev This `payable` method must receive appropriate `msg.value` to pass `_validatePayment()`.
-    ///     The price for renewal never incorporates pricing `premium`. This is because we only expect
-    ///     renewal on names that are not expired or are in the grace period. Use the `base` price returned
-    ///     by the `rentPrice` tuple to determine the price for calling this method.
-    ///
-    /// @param name The name that is being renewed.
-    /// @param duration The duration to extend the expiry, in seconds.
-    function renew(string calldata name, uint256 duration) external payable {
-        bytes32 labelhash = keccak256(bytes(name));
-        uint256 tokenId = uint256(labelhash);
-        IPriceOracle.Price memory price = rentPrice(name, duration);
-
-        _validatePayment(price.base);
-
-        uint256 expires = base.renew(tokenId, duration);
-
-        _refundExcessEth(price.base);
-
-        emit NameRenewed(name, labelhash, expires);
-    }
-
     /// @notice Internal helper for validating ETH payments
     ///
     /// @dev Emits `ETHPaymentProcessed` after validating the payment.
@@ -507,22 +448,6 @@ contract RegistrarController is Ownable {
             revert InsufficientValue();
         }
         emit ETHPaymentProcessed(msg.sender, price);
-    }
-
-    /// @notice Helper for deciding whether to include a launch-premium.
-    ///
-    /// @dev If the token returns a `0` expiry time, it hasn't been registered before. On launch, this will be true for all
-    ///     names. Use the `launchTime` to establish a premium price around the actual launch time.
-    ///
-    /// @param tokenId The ID of the token to check for expiry.
-    ///
-    /// @return expires Returns the expiry + GRACE_PERIOD for previously registered names, else `launchTime`.
-    function _getExpiry(uint256 tokenId) internal view returns (uint256 expires) {
-        expires = base.nameExpires(tokenId);
-        if (expires == 0) {
-            return launchTime;
-        }
-        return expires + GRACE_PERIOD;
     }
 
     /// @notice Shared registartion logic for both `register()` and `discountedRegister()`.
@@ -570,7 +495,7 @@ contract RegistrarController is Ownable {
     /// @param data  The abi encoded calldata records that will be used in the multicallable resolver.
     function _setRecords(address resolverAddress, bytes32 label, bytes[] calldata data) internal {
         bytes32 nodehash = keccak256(abi.encodePacked(rootNode, label));
-        L2Resolver resolver = L2Resolver(resolverAddress);
+        StoryResolver resolver = StoryResolver(resolverAddress);
         resolver.multicallWithNodeCheck(nodehash, data);
     }
 

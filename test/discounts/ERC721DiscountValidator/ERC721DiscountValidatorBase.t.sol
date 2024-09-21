@@ -2,7 +2,7 @@
 pragma solidity ^0.8.23;
 
 import {Test} from "forge-std/Test.sol";
-import {ERC721DiscountValidator} from "src/L2/discounts/ERC721DiscountValidator.sol";
+import {ERC721DiscountValidator} from "src/contract/discounts/ERC721DiscountValidator.sol";
 import {MockERC721} from "test/mocks/MockERC721.sol";
 
 contract ERC721DiscountValidatorBase is Test {

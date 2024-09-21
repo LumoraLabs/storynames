@@ -2,14 +2,14 @@
 pragma solidity ^0.8.23;
 
 import {Test, console} from "forge-std/Test.sol";
-import {BaseRegistrar} from "src/L2/BaseRegistrar.sol";
+import {StoryRegistrar} from "src/contract/StoryRegistrar.sol";
 import {MockPublicResolver} from "test/mocks/MockPublicResolver.sol";
-import {Registry} from "src/L2/Registry.sol";
+import {Registry} from "src/contract/Registry.sol";
 import {ETH_NODE, BASE_ETH_NODE} from "src/util/Constants.sol";
 
 contract BaseRegistrarBase is Test {
     Registry public registry;
-    BaseRegistrar public baseRegistrar;
+    StoryRegistrar public baseRegistrar;
     address public owner = makeAddr("owner");
     address public user = makeAddr("user");
     address public controller = makeAddr("controller");
@@ -26,7 +26,7 @@ contract BaseRegistrarBase is Test {
     function setUp() public {
         vm.prank(owner);
         registry = new Registry(owner);
-        baseRegistrar = new BaseRegistrar(registry, owner, BASE_ETH_NODE, baseURI, collectionURI);
+        baseRegistrar = new StoryRegistrar(registry, owner, BASE_ETH_NODE, baseURI, collectionURI);
         _ensSetup();
     }
 

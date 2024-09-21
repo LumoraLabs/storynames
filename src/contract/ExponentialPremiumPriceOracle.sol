@@ -4,7 +4,7 @@ pragma solidity ~0.8.17;
 import {FixedPointMathLib} from "solady/utils/FixedPointMathLib.sol";
 
 import {EDAPrice} from "src/lib/EDAPrice.sol";
-import {StablePriceOracle} from "src/L2/StablePriceOracle.sol";
+import {StablePriceOracle} from "src/contract/StablePriceOracle.sol";
 
 contract ExponentialPremiumPriceOracle is StablePriceOracle {
     uint256 public immutable startPremium;

@@ -2,7 +2,7 @@
 pragma solidity ^0.8.23;
 
 import "forge-std/Test.sol";
-import {Registry} from "src/L2/Registry.sol";
+import {Registry} from "src/contract/Registry.sol";
 import {ENS} from "ens-contracts/registry/ENS.sol";
 import {ETH_NODE, BASE_ETH_NODE} from "src/util/Constants.sol";
 import {NameEncoder} from "ens-contracts/utils/NameEncoder.sol";

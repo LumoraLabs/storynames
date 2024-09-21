@@ -2,7 +2,7 @@
 pragma solidity ^0.8.23;
 
 import "forge-std/Script.sol";
-import {Registry} from "src/L2/Registry.sol";
+import {Registry} from "src/contract/Registry.sol";
 import "src/util/Constants.sol";
 
 contract EstablishReverseNamespace is Script {

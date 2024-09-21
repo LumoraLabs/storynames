@@ -3,7 +3,7 @@ pragma solidity ^0.8.23;
 
 import {Test} from "forge-std/Test.sol";
 import {BaseRegistrarBase} from "./BaseRegistrarBase.t.sol";
-import {BaseRegistrar} from "src/L2/BaseRegistrar.sol";
+import {StoryRegistrar} from "src/contract/StoryRegistrar.sol";
 import {Ownable} from "solady/auth/Ownable.sol";
 
 contract SetContractURI is BaseRegistrarBase {
@@ -11,7 +11,7 @@ contract SetContractURI is BaseRegistrarBase {
 
     function test_allowsTheOwnerToSetTheContractURI() public {
         vm.expectEmit(address(baseRegistrar));
-        emit BaseRegistrar.ContractURIUpdated();
+        emit StoryRegistrar.ContractURIUpdated();
 
         vm.prank(owner);
         baseRegistrar.setContractURI(newContractURI);

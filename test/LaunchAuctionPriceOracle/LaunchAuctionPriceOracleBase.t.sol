@@ -3,8 +3,8 @@ pragma solidity ^0.8.17;
 
 import {Test} from "forge-std/Test.sol";
 import {FixedPointMathLib} from "solady/utils/FixedPointMathLib.sol";
-import {StablePriceOracle} from "src/L2/StablePriceOracle.sol";
-import {LaunchAuctionPriceOracle} from "src/L2/LaunchAuctionPriceOracle.sol";
+import {StablePriceOracle} from "src/contract/StablePriceOracle.sol";
+import {LaunchAuctionPriceOracle} from "src/contract/LaunchAuctionPriceOracle.sol";
 import {EDAPrice} from "src/lib/EDAPrice.sol";
 
 contract LaunchAuctionPriceOracleBase is Test {

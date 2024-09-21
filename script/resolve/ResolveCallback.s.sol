@@ -2,14 +2,14 @@
 pragma solidity ^0.8.23;
 
 import "forge-std/Script.sol";
-import {Registry} from "src/L2/Registry.sol";
+import {Registry} from "src/contract/Registry.sol";
 import {L1Resolver} from "src/L1/L1Resolver.sol";
 import {SignatureVerifier} from "src/lib/SignatureVerifier.sol";
 import "src/util/Constants.sol";
 import "ens-contracts/utils/NameEncoder.sol";
 import "solady/utils/LibString.sol";
 import {ECDSA} from "lib/solady/src/utils/ECDSA.sol";
-import {L2Resolver} from "src/L2/L2Resolver.sol";
+import {StoryResolver} from "src/contract/StoryResolver.sol";
 import {ExtendedResolver} from "ens-contracts/resolvers/profiles/ExtendedResolver.sol";
 import {AddrResolver} from "ens-contracts/resolvers/profiles/AddrResolver.sol";
 

@@ -2,8 +2,8 @@
 pragma solidity ~0.8.17;
 
 import {Test, console} from "forge-std/Test.sol";
-import {StablePriceOracle} from "src/L2/StablePriceOracle.sol";
-import {ExponentialPremiumPriceOracle} from "src/L2/ExponentialPremiumPriceOracle.sol";
+import {StablePriceOracle} from "src/contract/StablePriceOracle.sol";
+import {ExponentialPremiumPriceOracle} from "src/contract/ExponentialPremiumPriceOracle.sol";
 
 contract ExponentialPremiumOracleBase is Test {
     ExponentialPremiumPriceOracle oracle;

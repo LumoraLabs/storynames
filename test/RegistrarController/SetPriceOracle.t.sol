@@ -2,9 +2,9 @@
 pragma solidity ^0.8.23;
 
 import {RegistrarControllerBase} from "./RegistrarControllerBase.t.sol";
-import {RegistrarController} from "src/L2/RegistrarController.sol";
+import {RegistrarController} from "src/contract/RegistrarController.sol";
 import {MockPriceOracle} from "test/mocks/MockPriceOracle.sol";
-import {IPriceOracle} from "src/L2/interface/IPriceOracle.sol";
+import {IPriceOracle} from "src/contract/interface/IPriceOracle.sol";
 import {Ownable} from "solady/auth/Ownable.sol";
 
 contract SetPriceOracle is RegistrarControllerBase {

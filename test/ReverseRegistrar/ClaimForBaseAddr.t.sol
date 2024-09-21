@@ -2,7 +2,7 @@
 pragma solidity ^0.8.23;
 
 import {ReverseRegistrarBase} from "./ReverseRegistrarBase.t.sol";
-import {ReverseRegistrar} from "src/L2/ReverseRegistrar.sol";
+import {ReverseRegistrar} from "src/contract/ReverseRegistrar.sol";
 import {Sha3} from "src/lib/Sha3.sol";
 import {BASE_REVERSE_NODE} from "src/util/Constants.sol";
 import {MockOwnedContract} from "test/mocks/MockOwnedContract.sol";

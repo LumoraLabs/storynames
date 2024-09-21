@@ -1,7 +1,7 @@
 //SPDX-License-Identifier: MIT
 pragma solidity ^0.8.23;
 
-import {BaseRegistrar} from "src/L2/BaseRegistrar.sol";
+import {StoryRegistrar} from "src/contract/StoryRegistrar.sol";
 import {BaseRegistrarBase} from "./BaseRegistrarBase.t.sol";
 import {ERC721} from "lib/solady/src/tokens/ERC721.sol";
 import {ENS} from "ens-contracts/registry/ENS.sol";
@@ -11,13 +11,13 @@ contract RegisterWithRecord is BaseRegistrarBase {
     function test_reverts_whenTheRegistrarIsNotLive() public {
         vm.prank(address(baseRegistrar));
         registry.setOwner(BASE_ETH_NODE, owner);
-        vm.expectRevert(BaseRegistrar.RegistrarNotLive.selector);
+        vm.expectRevert(StoryRegistrar.RegistrarNotLive.selector);
         baseRegistrar.registerWithRecord(id, user, duration, resolver, ttl);
     }
 
     function test_reverts_whenCalledByNonController(address caller) public {
         vm.prank(caller);
-        vm.expectRevert(BaseRegistrar.OnlyController.selector);
+        vm.expectRevert(StoryRegistrar.OnlyController.selector);
         baseRegistrar.registerWithRecord(id, user, duration, resolver, ttl);
     }
 
@@ -29,7 +29,7 @@ contract RegisterWithRecord is BaseRegistrarBase {
         vm.expectEmit(address(registry));
         emit ENS.NewOwner(BASE_ETH_NODE, bytes32(id), user);
         vm.expectEmit(address(baseRegistrar));
-        emit BaseRegistrar.NameRegisteredWithRecord(id, user, duration + blockTimestamp, resolver, ttl);
+        emit StoryRegistrar.NameRegisteredWithRecord(id, user, duration + blockTimestamp, resolver, ttl);
 
         vm.warp(blockTimestamp);
         vm.prank(controller);
@@ -55,7 +55,7 @@ contract RegisterWithRecord is BaseRegistrarBase {
         vm.expectEmit(address(registry));
         emit ENS.NewOwner(BASE_ETH_NODE, bytes32(id), newOwner);
         vm.expectEmit(address(baseRegistrar));
-        emit BaseRegistrar.NameRegisteredWithRecord(id, newOwner, duration + newBlockTimestamp, resolver, ttl);
+        emit StoryRegistrar.NameRegisteredWithRecord(id, newOwner, duration + newBlockTimestamp, resolver, ttl);
 
         vm.warp(newBlockTimestamp);
         vm.prank(controller);
@@ -73,7 +73,7 @@ contract RegisterWithRecord is BaseRegistrarBase {
         _registrationSetup();
         _registerName(label, user, duration);
 
-        vm.expectRevert(abi.encodeWithSelector(BaseRegistrar.NotAvailable.selector, id));
+        vm.expectRevert(abi.encodeWithSelector(StoryRegistrar.NotAvailable.selector, id));
         vm.prank(controller);
         baseRegistrar.registerWithRecord(id, user, duration, resolver, ttl);
     }
@@ -83,7 +83,7 @@ contract RegisterWithRecord is BaseRegistrarBase {
         _registrationSetup();
         _registerName(label, user, duration);
 
-        vm.expectRevert(abi.encodeWithSelector(BaseRegistrar.NotAvailable.selector, id));
+        vm.expectRevert(abi.encodeWithSelector(StoryRegistrar.NotAvailable.selector, id));
         vm.warp(blockTimestamp + duration + GRACE_PERIOD - 1);
         vm.prank(controller);
         baseRegistrar.registerWithRecord(id, user, duration, resolver, ttl);

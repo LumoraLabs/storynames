@@ -15,18 +15,18 @@ import {NameResolver} from "ens-contracts/resolvers/profiles/NameResolver.sol";
 import {PubkeyResolver} from "ens-contracts/resolvers/profiles/PubkeyResolver.sol";
 import {TextResolver} from "ens-contracts/resolvers/profiles/TextResolver.sol";
 
-import {IReverseRegistrar} from "src/L2/interface/IReverseRegistrar.sol";
+import {IReverseRegistrar} from "src/contract/interface/IReverseRegistrar.sol";
 
-/// @title L2 Resolver
+/// @title StoryResolver Resolver
 ///
-/// @notice The default resolver for the Base Usernames project. This contract implements the functionality of the ENS
+/// @notice The default resolver for the Story Usernames project. This contract implements the functionality of the ENS
 ///         PublicResolver while also inheriting ExtendedResolver for compatibility with CCIP-read.
 ///         Public Resolver: https://github.com/ensdomains/ens-contracts/blob/staging/contracts/resolvers/PublicResolver.sol
 ///         Extended Resolver: https://github.com/ensdomains/ens-contracts/blob/staging/contracts/resolvers/profiles/ExtendedResolver.sol
 ///
 /// @author Coinbase (https://github.com/base-org/usernames)
 /// @author ENS (https://github.com/ensdomains/ens-contracts/tree/staging)
-contract L2Resolver is
+contract StoryResolver is
     Multicallable,
     ABIResolver,
     AddrResolver,
@@ -104,7 +104,7 @@ contract L2Resolver is
     /*                        IMPLEMENTATION                      */
     /*.•°:°.´+˚.*°.˚:*.´•*.+°.•°:´*.´•*.•°.•°:°.´:•˚°.*°.˚:*.´+°.•*/
 
-    /// @notice L2 Resolver constructor used to establish the necessary contract configuration.
+    /// @notice Story Resolver constructor used to establish the necessary contract configuration.
     ///
     /// @param ens_ The Registry contract.
     /// @param registrarController_ The address of the RegistrarController contract.

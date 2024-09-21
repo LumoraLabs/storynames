@@ -3,7 +3,7 @@ pragma solidity ^0.8.23;
 
 import {Test, console} from "forge-std/Test.sol";
 import {IntegrationTestBase} from "./IntegrationTestBase.t.sol";
-import {RegistrarController} from "src/L2/RegistrarController.sol";
+import {RegistrarController} from "src/contract/RegistrarController.sol";
 
 contract LaunchAuctionRegistrations is IntegrationTestBase {
     string name = "alice";
@@ -53,7 +53,7 @@ contract LaunchAuctionRegistrations is IntegrationTestBase {
             name: name,
             owner: alice,
             duration: duration,
-            resolver: address(defaultL2Resolver),
+            resolver: address(defaultStoryResolver),
             data: new bytes[](0),
             reverseRecord: true
         });

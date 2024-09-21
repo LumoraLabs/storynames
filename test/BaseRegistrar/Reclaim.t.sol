@@ -1,7 +1,7 @@
 //SPDX-License-Identifier: MIT
 pragma solidity ^0.8.23;
 
-import {BaseRegistrar} from "src/L2/BaseRegistrar.sol";
+import {StoryRegistrar} from "src/contract/StoryRegistrar.sol";
 import {BaseRegistrarBase} from "./BaseRegistrarBase.t.sol";
 import {ERC721} from "lib/solady/src/tokens/ERC721.sol";
 import {ENS} from "ens-contracts/registry/ENS.sol";
@@ -12,7 +12,7 @@ contract Reclaim is BaseRegistrarBase {
         vm.prank(address(baseRegistrar));
         registry.setOwner(BASE_ETH_NODE, makeAddr("0xdead"));
 
-        vm.expectRevert(BaseRegistrar.RegistrarNotLive.selector);
+        vm.expectRevert(StoryRegistrar.RegistrarNotLive.selector);
 
         baseRegistrar.reclaim(id, user);
     }
@@ -22,7 +22,7 @@ contract Reclaim is BaseRegistrarBase {
         _registrationSetup();
         _registerName(label, user, duration);
 
-        vm.expectRevert(abi.encodeWithSelector(BaseRegistrar.NotApprovedOwner.selector, id, caller));
+        vm.expectRevert(abi.encodeWithSelector(StoryRegistrar.NotApprovedOwner.selector, id, caller));
 
         vm.prank(caller);
         baseRegistrar.reclaim(id, caller);
@@ -32,7 +32,7 @@ contract Reclaim is BaseRegistrarBase {
         _registrationSetup();
         uint256 expires = _registerName(label, user, duration);
 
-        vm.expectRevert(abi.encodeWithSelector(BaseRegistrar.Expired.selector, id));
+        vm.expectRevert(abi.encodeWithSelector(StoryRegistrar.Expired.selector, id));
 
         vm.warp(expires + 1);
         vm.prank(user);

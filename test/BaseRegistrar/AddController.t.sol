@@ -1,14 +1,14 @@
 //SPDX-License-Identifier: MIT
 pragma solidity ^0.8.23;
 
-import {BaseRegistrar} from "src/L2/BaseRegistrar.sol";
+import {StoryRegistrar} from "src/contract/StoryRegistrar.sol";
 import {BaseRegistrarBase} from "./BaseRegistrarBase.t.sol";
 import {Ownable} from "solady/auth/Ownable.sol";
 
 contract AddController is BaseRegistrarBase {
     function test_allowsOwnerToSetController(address controller) public {
         vm.expectEmit();
-        emit BaseRegistrar.ControllerAdded(controller);
+        emit StoryRegistrar.ControllerAdded(controller);
         vm.prank(owner);
         baseRegistrar.addController(controller);
         assertTrue(baseRegistrar.controllers(controller));

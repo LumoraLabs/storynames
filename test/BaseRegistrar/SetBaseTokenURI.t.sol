@@ -1,7 +1,7 @@
 //SPDX-License-Identifier: MIT
 pragma solidity ^0.8.23;
 
-import {BaseRegistrar} from "src/L2/BaseRegistrar.sol";
+import {StoryRegistrar} from "src/contract/StoryRegistrar.sol";
 import {BaseRegistrarBase} from "./BaseRegistrarBase.t.sol";
 import {Ownable} from "solady/auth/Ownable.sol";
 import {LibString} from "solady/utils/LibString.sol";
@@ -13,7 +13,7 @@ contract SetBaseTokenURI is BaseRegistrarBase {
 
     function test_allowsTheOwnerToSetTheBaseURI() public {
         vm.expectEmit(address(baseRegistrar));
-        emit BaseRegistrar.BatchMetadataUpdate(1, type(uint256).max);
+        emit StoryRegistrar.BatchMetadataUpdate(1, type(uint256).max);
         vm.prank(owner);
         baseRegistrar.setBaseTokenURI(newBaseURI);
 

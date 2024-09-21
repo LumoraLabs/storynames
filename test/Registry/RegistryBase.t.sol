@@ -2,7 +2,7 @@
 pragma solidity ^0.8.23;
 
 import {Test} from "forge-std/Test.sol";
-import {Registry} from "src/L2/Registry.sol";
+import {Registry} from "src/contract/Registry.sol";
 import {ETH_NODE} from "src/util/Constants.sol";
 
 import {MockPublicResolver} from "../mocks/MockPublicResolver.sol";

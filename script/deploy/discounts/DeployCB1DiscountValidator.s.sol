@@ -2,7 +2,7 @@
 pragma solidity ^0.8.23;
 
 import "forge-std/Script.sol";
-import {AttestationValidator} from "src/L2/discounts/AttestationValidator.sol";
+import {AttestationValidator} from "src/contract/discounts/AttestationValidator.sol";
 
 contract DeployCB1DiscountValidator is Script {
     function run() external {

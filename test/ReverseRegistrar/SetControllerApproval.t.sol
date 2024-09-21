@@ -2,7 +2,7 @@
 pragma solidity ^0.8.23;
 
 import {ReverseRegistrarBase} from "./ReverseRegistrarBase.t.sol";
-import {ReverseRegistrar} from "src/L2/ReverseRegistrar.sol";
+import {ReverseRegistrar} from "src/contract/ReverseRegistrar.sol";
 import {Ownable} from "solady/auth/Ownable.sol";
 
 contract SetControllerApproval is ReverseRegistrarBase {

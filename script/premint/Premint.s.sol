@@ -1,8 +1,8 @@
 //SPDX-License-Identifier: MIT
 pragma solidity ^0.8.23;
 
-import {BaseRegistrar} from "src/L2/BaseRegistrar.sol";
-import {RegistrarController} from "src/L2/RegistrarController.sol";
+import {StoryRegistrar} from "src/contract/StoryRegistrar.sol";
+import {RegistrarController} from "src/contract/RegistrarController.sol";
 import {LibString} from "solady/utils/LibString.sol";
 
 import "forge-std/Script.sol";
@@ -27,13 +27,13 @@ contract Premint is Script {
         bytes32 label = keccak256(bytes(name));
         uint256 id = uint256(label);
 
-        if (!BaseRegistrar(BASE_REGISTRAR).isAvailable(id)) {
+        if (!StoryRegistrar(BASE_REGISTRAR).isAvailable(id)) {
             console.log("Name already registered");
             return;
         }
 
         // Premint name
-        BaseRegistrar(BASE_REGISTRAR).registerOnly(id, BASE_ECOSYSTEM_MULTISIG, duration);
+        StoryRegistrar(BASE_REGISTRAR).registerOnly(id, BASE_ECOSYSTEM_MULTISIG, duration);
 
         // Record name and id in csv
         string memory idStr = vm.toString(id);
@@ -52,9 +52,9 @@ contract Premint is Script {
             string memory name = vm.readLine(file);
             bytes32 label = keccak256(bytes(name));
             uint256 id = uint256(label);
-            if (BaseRegistrar(BASE_REGISTRAR).nameExpires(id) == 0) {
+            if (StoryRegistrar(BASE_REGISTRAR).nameExpires(id) == 0) {
                 console.log("Not minted: ", name);
-            } else if (BaseRegistrar(BASE_REGISTRAR).ownerOf(id) != BASE_ECOSYSTEM_MULTISIG) {
+            } else if (StoryRegistrar(BASE_REGISTRAR).ownerOf(id) != BASE_ECOSYSTEM_MULTISIG) {
                 console.log("Not owned by ecosystem multisig", name);
             }
         }

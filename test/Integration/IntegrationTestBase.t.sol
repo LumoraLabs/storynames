@@ -3,21 +3,21 @@ pragma solidity ^0.8.23;
 
 import {Test, console} from "forge-std/Test.sol";
 
-import {AttestationValidator} from "src/L2/discounts/AttestationValidator.sol";
-import {BaseRegistrar} from "src/L2/BaseRegistrar.sol";
-import {CBIdDiscountValidator} from "src/L2/discounts/CBIdDiscountValidator.sol";
-import {ExponentialPremiumPriceOracle} from "src/L2/ExponentialPremiumPriceOracle.sol";
-import {ERC1155DiscountValidator} from "src/L2/discounts/ERC1155DiscountValidator.sol";
-import {IBaseRegistrar} from "src/L2/interface/IBaseRegistrar.sol";
-import {IDiscountValidator} from "src/L2/interface/IDiscountValidator.sol";
-import {IPriceOracle} from "src/L2/interface/IPriceOracle.sol";
-import {IReverseRegistrar} from "src/L2/interface/IReverseRegistrar.sol";
+import {AttestationValidator} from "src/contract/discounts/AttestationValidator.sol";
+import {StoryRegistrar} from "src/contract/StoryRegistrar.sol";
+import {CBIdDiscountValidator} from "src/contract/discounts/CBIdDiscountValidator.sol";
+import {ExponentialPremiumPriceOracle} from "src/contract/ExponentialPremiumPriceOracle.sol";
+import {ERC1155DiscountValidator} from "src/contract/discounts/ERC1155DiscountValidator.sol";
+import {IBaseRegistrar} from "src/contract/interface/IBaseRegistrar.sol";
+import {IDiscountValidator} from "src/contract/interface/IDiscountValidator.sol";
+import {IPriceOracle} from "src/contract/interface/IPriceOracle.sol";
+import {IReverseRegistrar} from "src/contract/interface/IReverseRegistrar.sol";
 import {L1Resolver} from "src/L1/L1Resolver.sol";
-import {L2Resolver} from "src/L2/L2Resolver.sol";
-import {LaunchAuctionPriceOracle} from "src/L2/LaunchAuctionPriceOracle.sol";
-import {RegistrarController} from "src/L2/RegistrarController.sol";
-import {Registry} from "src/L2/Registry.sol";
-import {ReverseRegistrar} from "src/L2/ReverseRegistrar.sol";
+import {StoryResolver} from "src/contract/StoryResolver.sol";
+import {LaunchAuctionPriceOracle} from "src/contract/LaunchAuctionPriceOracle.sol";
+import {RegistrarController} from "src/contract/RegistrarController.sol";
+import {Registry} from "src/contract/Registry.sol";
+import {ReverseRegistrar} from "src/contract/ReverseRegistrar.sol";
 
 import {
     ETH_NODE,
@@ -37,9 +37,9 @@ contract IntegrationTestBase is Test {
     L1Resolver l1Resolver;
 
     Registry registry;
-    BaseRegistrar baseRegistrar;
+    StoryRegistrar baseRegistrar;
     RegistrarController registrarController;
-    L2Resolver defaultL2Resolver;
+    StoryResolver defaultStoryResolver;
     ReverseRegistrar reverseRegistrar;
     LaunchAuctionPriceOracle launchAuctionPriceOracle;
     ExponentialPremiumPriceOracle exponentialPremiumPriceOracle;
@@ -73,7 +73,7 @@ contract IntegrationTestBase is Test {
         launchAuctionPriceOracle =
             new LaunchAuctionPriceOracle(_getBasePrices(), LAUNCH_AUCTION_START_PRICE, LAUNCH_AUCTION_DURATION_HOURS);
 
-        baseRegistrar = new BaseRegistrar(registry, owner, BASE_ETH_NODE, "", "");
+        baseRegistrar = new StoryRegistrar(registry, owner, BASE_ETH_NODE, "", "");
 
         _establishNamespaces();
 
@@ -90,10 +90,10 @@ contract IntegrationTestBase is Test {
         vm.prank(owner);
         reverseRegistrar.setControllerApproval(address(registrarController), true);
 
-        defaultL2Resolver = new L2Resolver(registry, address(registrarController), address(reverseRegistrar), owner);
+        defaultStoryResolver = new StoryResolver(registry, address(registrarController), address(reverseRegistrar), owner);
 
         vm.prank(owner);
-        reverseRegistrar.setDefaultResolver(address(defaultL2Resolver));
+        reverseRegistrar.setDefaultResolver(address(defaultStoryResolver));
 
         vm.prank(owner);
         reverseRegistrar.setName("rootOwner");
@@ -132,7 +132,7 @@ contract IntegrationTestBase is Test {
             name: name,
             owner: alice,
             duration: duration,
-            resolver: address(defaultL2Resolver),
+            resolver: address(defaultStoryResolver),
             data: new bytes[](0),
             reverseRecord: true
         });

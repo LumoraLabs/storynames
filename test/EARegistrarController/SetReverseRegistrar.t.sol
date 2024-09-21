@@ -2,9 +2,9 @@
 pragma solidity ^0.8.23;
 
 import {EARegistrarControllerBase} from "./EARegistrarControllerBase.t.sol";
-import {EARegistrarController} from "src/L2/EARegistrarController.sol";
+import {EARegistrarController} from "src/contract/EARegistrarController.sol";
 import {MockReverseRegistrar} from "test/mocks/MockReverseRegistrar.sol";
-import {IReverseRegistrar} from "src/L2/interface/IReverseRegistrar.sol";
+import {IReverseRegistrar} from "src/contract/interface/IReverseRegistrar.sol";
 import {Ownable} from "solady/auth/Ownable.sol";
 
 contract SetReverseRegistrar is EARegistrarControllerBase {

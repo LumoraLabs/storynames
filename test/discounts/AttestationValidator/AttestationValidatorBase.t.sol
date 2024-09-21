@@ -2,7 +2,7 @@
 pragma solidity ^0.8.23;
 
 import {Test, console} from "forge-std/Test.sol";
-import {AttestationValidator} from "src/L2/discounts/AttestationValidator.sol";
+import {AttestationValidator} from "src/contract/discounts/AttestationValidator.sol";
 import {MockAttestationIndexer} from "test/mocks/MockAttestationIndexer.sol";
 import {MockEAS} from "test/mocks/MockEAS.sol";
 import {IEAS} from "eas-contracts/IEAS.sol";

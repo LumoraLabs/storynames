@@ -2,7 +2,7 @@
 pragma solidity ^0.8.23;
 
 import {RegistrarControllerBase} from "./RegistrarControllerBase.t.sol";
-import {IPriceOracle} from "src/L2/interface/IPriceOracle.sol";
+import {IPriceOracle} from "src/contract/interface/IPriceOracle.sol";
 
 contract RentPrice is RegistrarControllerBase {
     function test_returnsPrice_fromPricingOracle() public view {

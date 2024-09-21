@@ -2,7 +2,7 @@
 pragma solidity ^0.8.23;
 
 import {EARegistrarControllerBase} from "./EARegistrarControllerBase.t.sol";
-import {EARegistrarController} from "src/L2/EARegistrarController.sol";
+import {EARegistrarController} from "src/contract/EARegistrarController.sol";
 import {Ownable} from "solady/auth/Ownable.sol";
 
 contract SetDiscountDetails is EARegistrarControllerBase {

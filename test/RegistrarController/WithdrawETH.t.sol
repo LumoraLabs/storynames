@@ -2,8 +2,8 @@
 pragma solidity ^0.8.23;
 
 import {RegistrarControllerBase} from "./RegistrarControllerBase.t.sol";
-import {RegistrarController} from "src/L2/RegistrarController.sol";
-import {IPriceOracle} from "src/L2/interface/IPriceOracle.sol";
+import {RegistrarController} from "src/contract/RegistrarController.sol";
+import {IPriceOracle} from "src/contract/interface/IPriceOracle.sol";
 
 contract WithdrawETH is RegistrarControllerBase {
     function test_alwaysSendsTheBalanceToTheOwner(address caller) public {

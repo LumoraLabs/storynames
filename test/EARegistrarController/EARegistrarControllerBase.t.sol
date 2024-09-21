@@ -2,11 +2,11 @@
 pragma solidity ^0.8.23;
 
 import {Test} from "forge-std/Test.sol";
-import {EARegistrarController} from "src/L2/EARegistrarController.sol";
-import {IPriceOracle} from "src/L2/interface/IPriceOracle.sol";
-import {BaseRegistrar} from "src/L2/BaseRegistrar.sol";
-import {Registry} from "src/L2/Registry.sol";
-import {IReverseRegistrar} from "src/L2/interface/IReverseRegistrar.sol";
+import {EARegistrarController} from "src/contract/EARegistrarController.sol";
+import {IPriceOracle} from "src/contract/interface/IPriceOracle.sol";
+import {StoryRegistrar} from "src/contract/StoryRegistrar.sol";
+import {Registry} from "src/contract/Registry.sol";
+import {IReverseRegistrar} from "src/contract/interface/IReverseRegistrar.sol";
 import {ENS} from "ens-contracts/registry/ENS.sol";
 
 import {MockBaseRegistrar} from "test/mocks/MockBaseRegistrar.sol";
@@ -53,7 +53,7 @@ contract EARegistrarControllerBase is Test {
 
         vm.prank(owner);
         controller = new EARegistrarController(
-            BaseRegistrar(address(base)),
+            StoryRegistrar(address(base)),
             IPriceOracle(address(prices)),
             IReverseRegistrar(address(reverse)),
             owner,

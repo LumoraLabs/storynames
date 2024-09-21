@@ -3,7 +3,7 @@ pragma solidity ^0.8.23;
 
 import {Test} from "forge-std/Test.sol";
 import {BaseRegistrarBase} from "./BaseRegistrarBase.t.sol";
-import {BaseRegistrar} from "src/L2/BaseRegistrar.sol";
+import {StoryRegistrar} from "src/contract/StoryRegistrar.sol";
 import {LibString} from "solady/utils/LibString.sol";
 
 contract TokenURI is BaseRegistrarBase {
@@ -32,7 +32,7 @@ contract TokenURI is BaseRegistrarBase {
     }
 
     function test_reverts_ifTheTokenHasNotBeenRegistered() public {
-        vm.expectRevert(abi.encodeWithSelector(BaseRegistrar.NonexistentToken.selector, id));
+        vm.expectRevert(abi.encodeWithSelector(StoryRegistrar.NonexistentToken.selector, id));
         baseRegistrar.tokenURI(id);
     }
 }

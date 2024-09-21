@@ -2,9 +2,9 @@
 pragma solidity ^0.8.23;
 
 import "forge-std/Script.sol";
-import {RegistrarController} from "src/L2/RegistrarController.sol";
-import {L2Resolver} from "src/L2/L2Resolver.sol";
-import {TextResolver} from "src/L2/L2Resolver.sol";
+import {RegistrarController} from "src/contract/RegistrarController.sol";
+import {StoryRegistrar} from "src/contract/StoryRegistrar.sol";
+import {TextResolver} from "src/contract/StoryResolver.sol";
 import "src/util/Constants.sol";
 import "ens-contracts/utils/NameEncoder.sol";
 import "solady/utils/LibString.sol";
@@ -29,7 +29,7 @@ contract RegisterNewName is Script {
 
         address controllerAddr = vm.envAddress("REGISTRAR_CONTROLLER_ADDR");
         RegistrarController controller = RegistrarController(controllerAddr);
-        address resolverAddr = vm.envAddress("L2_RESOLVER_ADDR"); // l2 resolver
+        address resolverAddr = vm.envAddress("STORY_RESOLVER_ADDR"); // Story Resolver
 
         RegistrarController.RegisterRequest memory request = RegistrarController.RegisterRequest({
             name: NAME,

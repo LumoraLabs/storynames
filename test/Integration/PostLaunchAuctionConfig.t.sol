@@ -3,10 +3,10 @@ pragma solidity ^0.8.23;
 
 import {Test, console} from "forge-std/Test.sol";
 import {IntegrationTestBase} from "./IntegrationTestBase.t.sol";
-import {RegistrarController} from "src/L2/RegistrarController.sol";
-import {ExponentialPremiumPriceOracle} from "src/L2/ExponentialPremiumPriceOracle.sol";
+import {RegistrarController} from "src/contract/RegistrarController.sol";
+import {ExponentialPremiumPriceOracle} from "src/contract/ExponentialPremiumPriceOracle.sol";
 import {GRACE_PERIOD} from "src/util/Constants.sol";
-import {IPriceOracle} from "src/L2/interface/IPriceOracle.sol";
+import {IPriceOracle} from "src/contract/interface/IPriceOracle.sol";
 
 contract PostLaunchAuctionConfig is IntegrationTestBase {
     string name = "alice";
@@ -39,7 +39,7 @@ contract PostLaunchAuctionConfig is IntegrationTestBase {
             name: name,
             owner: alice,
             duration: duration,
-            resolver: address(defaultL2Resolver),
+            resolver: address(defaultStoryResolver),
             data: new bytes[](0),
             reverseRecord: true
         });
@@ -84,7 +84,7 @@ contract PostLaunchAuctionConfig is IntegrationTestBase {
             name: name,
             owner: alice,
             duration: duration,
-            resolver: address(defaultL2Resolver),
+            resolver: address(defaultStoryResolver),
             data: new bytes[](0),
             reverseRecord: true
         });
@@ -116,7 +116,7 @@ contract PostLaunchAuctionConfig is IntegrationTestBase {
             name: name,
             owner: alice,
             duration: duration,
-            resolver: address(defaultL2Resolver),
+            resolver: address(defaultStoryResolver),
             data: new bytes[](0),
             reverseRecord: true
         });

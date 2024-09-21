@@ -3,12 +3,12 @@ pragma solidity ^0.8.23;
 
 import "forge-std/Script.sol";
 
-import {IPriceOracle} from "src/L2/interface/IPriceOracle.sol";
-import {BaseRegistrar} from "src/L2/BaseRegistrar.sol";
-import {Registry} from "src/L2/Registry.sol";
+import {IPriceOracle} from "src/contract/interface/IPriceOracle.sol";
+import {StoryRegistrar} from "src/contract/StoryRegistrar.sol";
+import {Registry} from "src/contract/Registry.sol";
 import {IERC20} from "openzeppelin-contracts/contracts/token/ERC20/IERC20.sol";
-import {IReverseRegistrar} from "src/L2/interface/IReverseRegistrar.sol";
-import {RegistrarController} from "src/L2/RegistrarController.sol";
+import {IReverseRegistrar} from "src/contract/interface/IReverseRegistrar.sol";
+import {RegistrarController} from "src/contract/RegistrarController.sol";
 import {NameEncoder} from "ens-contracts/utils/NameEncoder.sol";
 
 import "src/util/Constants.sol";
@@ -19,15 +19,14 @@ contract DeployRegistrarController is Script {
         address deployerAddress = vm.addr(deployerPrivateKey);
         vm.startBroadcast(deployerPrivateKey);
 
-        /// L2 Resolver constructor data
         address oracle = vm.envAddress("PRICE_ORACLE_ADDR");
         address reverse = vm.envAddress("REVERSE_REGISTRAR_ADDR"); // deployer-owned rev registrar
-        address base = vm.envAddress("BASE_REGISTRAR_ADDR");
-        (, bytes32 rootNode) = NameEncoder.dnsEncodeName("basetest.eth");
-        string memory rootName = ".basetest.eth";
+        address base = vm.envAddress("STORY_REGISTRAR_ADDR");
+        (, bytes32 rootNode) = NameEncoder.dnsEncodeName("ip");
+        string memory rootName = ".ip";
 
         RegistrarController controller = new RegistrarController(
-            BaseRegistrar(base),
+            StoryRegistrar(base),
             IPriceOracle(oracle),
             IReverseRegistrar(reverse),
             deployerAddress,

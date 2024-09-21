@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.23;
 
-import {IPriceOracle} from "src/L2/interface/IPriceOracle.sol";
+import {IPriceOracle} from "src/contract/interface/IPriceOracle.sol";
 import {GRACE_PERIOD} from "src/util/Constants.sol";
 
 contract MockPriceOracle is IPriceOracle {
