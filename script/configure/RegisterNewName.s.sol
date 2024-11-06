@@ -15,12 +15,12 @@ interface AddrResolver {
 
 contract RegisterNewName is Script {
     // NAME AND RECORD DEFS /////////////////////////////
-    string NAME = "steve";
+    string NAME = "hellen";
     uint256 duration = 365 days;
-    address RESOLVED_ADDR = 0xB18e4C959bccc8EF86D78DC297fb5efA99550d85;
-    bytes32 discountKey = keccak256("testnet.discount.validator");
-    string textKey = "amicool";
-    string textValue = "yes";
+    address RESOLVED_ADDR = 0x369Abe773328A9Aa2bb48B0D6F7D4bca58959EAb;
+    //bytes32 discountKey = keccak256("testnet.discount.validator");
+    string textKey = "bio";
+    string textValue = "welcome to Story Name Service";
     /////////////////////////////////////////////////////
 
     function run() external {
@@ -37,16 +37,16 @@ contract RegisterNewName is Script {
             duration: duration,
             resolver: resolverAddr,
             data: _packResolverData(),
-            reverseRecord: false
+            reverseRecord: true
         });
 
-        controller.discountedRegister(request, discountKey, "");
+        controller.register{value: 9990881717616000}(request);
 
         vm.stopBroadcast();
     }
 
     function _packResolverData() internal view returns (bytes[] memory) {
-        (, bytes32 rootNode) = NameEncoder.dnsEncodeName("basetest.eth");
+        (, bytes32 rootNode) = NameEncoder.dnsEncodeName("ip");
         bytes32 label = keccak256(bytes(NAME));
         bytes32 nodehash = keccak256(abi.encodePacked(rootNode, label));
 

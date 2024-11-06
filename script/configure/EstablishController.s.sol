@@ -10,7 +10,7 @@ contract EstablishController is Script {
         uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
         vm.startBroadcast(deployerPrivateKey);
 
-        address base = vm.envAddress("BASE_REGISTRAR_ADDR");
+        address base = vm.envAddress("STORY_REGISTRAR_ADDR");
         address controller = vm.envAddress("REGISTRAR_CONTROLLER_ADDR");
         StoryRegistrar(base).addController(controller);
 

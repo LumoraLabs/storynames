@@ -4,9 +4,9 @@ pragma solidity ^0.8.23;
 import "forge-std/Script.sol";
 
 import {StablePriceOracle} from "src/contract/StablePriceOracle.sol";
-import {ExponentialPremiumPriceOracle} from "src/contract/ExponentialPremiumPriceOracle.sol";
+import {LaunchAuctionPriceOracle} from "src/contract/LaunchAuctionPriceOracle.sol";
 
-contract DeployPriceOracle is Script {
+contract DeployAuctionPriceOracle is Script {
     function run() external {
         uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
         vm.startBroadcast(deployerPrivateKey);
@@ -19,9 +19,9 @@ contract DeployPriceOracle is Script {
         prices[4] = 316_808_781;
         prices[5] = 31_680_878; // 3,168,808.781402895 = 1e14 / (365.25 * 24 * 3600)
         uint256 premiumStart = 10000 ether;
-        uint256 totalDays = 8 days;
+        uint256 totalHours = 192 hours;
 
-        StablePriceOracle oracle = new ExponentialPremiumPriceOracle(prices, premiumStart, totalDays);
+        StablePriceOracle oracle = new LaunchAuctionPriceOracle(prices, premiumStart, totalHours);
         console.log("Price Oracle deployed to:");
         console.log(address(oracle));
 
