@@ -48,22 +48,22 @@ contract EAStoryNameSBT is ERC721, Ownable {
         revert("SoulboundToken: Transfers are not allowed");
     }
 
-    function safeTransferFrom(
-        address from,
-        address to,
-        uint256 tokenId
-    ) public pure override {
-        revert("SoulboundToken: Transfers are not allowed");
-    }
+    // function safeTransferFrom(
+    //     address from,
+    //     address to,
+    //     uint256 tokenId
+    // ) public pure override {
+    //     revert("SoulboundToken: Transfers are not allowed");
+    // }
 
-    function safeTransferFrom(
-        address from,
-        address to,
-        uint256 tokenId,
-        bytes memory _data
-    ) public pure override {
-        revert("SoulboundToken: Transfers are not allowed");
-    }
+    // function safeTransferFrom(
+    //     address from,
+    //     address to,
+    //     uint256 tokenId,
+    //     bytes memory _data
+    // ) public pure override {
+    //     revert("SoulboundToken: Transfers are not allowed");
+    // }
 
     // Optional: Burn function to allow users to "revoke" their SBT
     function burn(uint256 tokenId) public {

@@ -1,0 +1,12 @@
+@ensdomains/buffer/=lib/buffer/
+@openzeppelin/contracts-upgradeable/=lib/openzeppelin-contracts-upgradeable/contracts/
+@openzeppelin/contracts/=lib/openzeppelin-contracts/contracts/
+buffer/=lib/buffer/contracts/
+ds-test/=lib/openzeppelin-contracts-upgradeable/lib/forge-std/lib/ds-test/src/
+eas-contracts/=lib/eas-contracts/contracts/
+ens-contracts/=lib/ens-contracts/contracts/
+erc4626-tests/=lib/openzeppelin-contracts-upgradeable/lib/erc4626-tests/
+forge-std/=lib/forge-std/src/
+halmos-cheatcodes/=lib/openzeppelin-contracts-upgradeable/lib/halmos-cheatcodes/src/
+solady/=lib/solady/src/
+verifications/=lib/verifications/src/

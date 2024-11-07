@@ -1,19 +1,18 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.23;
+pragma solidity ^0.8.23;
 
 import { AccessControlUpgradeable } from "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
-// solhint-disable-next-line max-line-length
 import { ERC721URIStorageUpgradeable } from "@openzeppelin/contracts-upgradeable/token/ERC721/extensions/ERC721URIStorageUpgradeable.sol";
 import { IERC20 } from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import { IERC165 } from "@openzeppelin/contracts/utils/introspection/IERC165.sol";
 
-import { ISPGNFT } from "src/contract/interfaces/ISPGNFT.sol";
-import { Errors } from "src/contract/lib/Errors.sol";
+import { ISPGNFT } from "src/contract/interface/ISPGNFT.sol";
+import { IComposableERC721 } from "src/contract/interface/IComposableERC721.sol";
+import { Errors as SPGErrors } from "src/contract/lib/Errors.sol";
 import { SPGNFTLib } from "src/contract/lib/SPGNFTLib.sol";
+import { Ownable} from "solady/auth/Ownable.sol";
 
-contract ComposableERC721 is ISPGNFT, IComposableERC721, ERC721URIStorageUpgradeable, AccessControlUpgradeable, Ownable {
-    using Address for address;
-
+contract ComposableERC721 is ISPGNFT, IComposableERC721, ERC721URIStorageUpgradeable, AccessControlUpgradeable, Ownable {    
     struct TokenOwner {
         address ownerAddress;
         uint256 parentTokenId; // 0 if no parent
@@ -23,7 +22,7 @@ contract ComposableERC721 is ISPGNFT, IComposableERC721, ERC721URIStorageUpgrade
     mapping(address => mapping(uint256 => uint256[])) private _parentToChildTokens;
     mapping(uint256 => uint256) private _childTokenIndex;
 
-        /// @dev Storage structure for the SPGNFTSotrage.
+    /// @dev Storage structure for the SPGNFTSotrage.
     /// @param _maxSupply The maximum supply of the collection.
     /// @param _totalSupply The total minted supply of the collection.
     /// @param _mintFee The fee to mint an NFT from the collection.
@@ -75,7 +74,7 @@ contract ComposableERC721 is ISPGNFT, IComposableERC721, ERC721URIStorageUpgrade
             groupingWorkflows == address(0) ||
             licenseAttachmentWorkflows == address(0) ||
             registrationWorkflows == address(0)
-        ) revert Errors.SPGNFT__ZeroAddressParam();
+        ) revert SPGErrors.SPGNFT__ZeroAddressParam();
 
         DERIVATIVE_WORKFLOWS_ADDRESS = derivativeWorkflows;
         GROUPING_WORKFLOWS_ADDRESS = groupingWorkflows;
@@ -97,16 +96,16 @@ contract ComposableERC721 is ISPGNFT, IComposableERC721, ERC721URIStorageUpgrade
             msg.sender != GROUPING_WORKFLOWS_ADDRESS &&
             msg.sender != LICENSE_ATTACHMENT_WORKFLOWS_ADDRESS &&
             msg.sender != REGISTRATION_WORKFLOWS_ADDRESS
-        ) revert Errors.SPGNFT__CallerNotPeripheryContract();
+        ) revert SPGErrors.SPGNFT__CallerNotPeripheryContract();
         _;
     }
 
-        /// @dev Initializes the SPGNFT collection.
+    /// @dev Initializes the SPGNFT collection.
     /// @dev If mint fee is non-zero, mint token must be set.
     /// @param initParams The initialization parameters for the collection. See {ISPGNFT-InitParams}
     function initialize(ISPGNFT.InitParams calldata initParams) public initializer {
-        if (initParams.mintFee > 0 && initParams.mintFeeToken == address(0)) revert Errors.SPGNFT__ZeroAddressParam();
-        if (initParams.maxSupply == 0) revert Errors.SPGNFT__ZeroMaxSupply();
+        if (initParams.mintFee > 0 && initParams.mintFeeToken == address(0)) revert SPGErrors.SPGNFT__ZeroAddressParam();
+        if (initParams.maxSupply == 0) revert SPGErrors.SPGNFT__ZeroMaxSupply();
 
         // grant roles to owner and periphery workflow contracts
         _grantRoles(initParams.owner);
@@ -193,7 +192,7 @@ contract ComposableERC721 is ISPGNFT, IComposableERC721, ERC721URIStorageUpgrade
     /// @param newFeeRecipient The new fee recipient.
     function setMintFeeRecipient(address newFeeRecipient) external {
         if (msg.sender != _getSPGNFTStorage()._mintFeeRecipient) {
-            revert Errors.SPGNFT__CallerNotFeeRecipient();
+            revert SPGErrors.SPGNFT__CallerNotFeeRecipient();
         }
         _getSPGNFTStorage()._mintFeeRecipient = newFeeRecipient;
     }
@@ -244,7 +243,7 @@ contract ComposableERC721 is ISPGNFT, IComposableERC721, ERC721URIStorageUpgrade
         bool allowDuplicates
     ) public virtual returns (uint256 tokenId) {
         if (!_getSPGNFTStorage()._publicMinting && !hasRole(SPGNFTLib.MINTER_ROLE, msg.sender)) {
-            revert Errors.SPGNFT__MintingDenied();
+            revert SPGErrors.SPGNFT__MintingDenied();
         }
         tokenId = _mintToken({
             to: to,
@@ -309,12 +308,12 @@ contract ComposableERC721 is ISPGNFT, IComposableERC721, ERC721URIStorageUpgrade
         bool allowDuplicates
     ) internal returns (uint256 tokenId) {
         SPGNFTStorage storage $ = _getSPGNFTStorage();
-        if (!$._mintOpen) revert Errors.SPGNFT__MintingClosed();
-        if ($._totalSupply + 1 > $._maxSupply) revert Errors.SPGNFT__MaxSupplyReached();
+        if (!$._mintOpen) revert SPGErrors.SPGNFT__MintingClosed();
+        if ($._totalSupply + 1 > $._maxSupply) revert SPGErrors.SPGNFT__MaxSupplyReached();
 
         tokenId = $._nftMetadataHashToTokenId[nftMetadataHash];
         if (!allowDuplicates && tokenId != 0) {
-            revert Errors.SPGNFT__DuplicatedNFTMetadataHash({
+            revert SPGErrors.SPGNFT__DuplicatedNFTMetadataHash({
                 spgNftContract: address(this),
                 tokenId: tokenId,
                 nftMetadataHash: nftMetadataHash
@@ -394,7 +393,7 @@ contract ComposableERC721 is ISPGNFT, IComposableERC721, ERC721URIStorageUpgrade
     }
 
     function transferToParent(address toContract, uint256 toTokenId, uint256 tokenId) external override onlyOwnerOrApproved(tokenId) {
-        require(toContract != address(0) && toContract.isContract(), "Invalid contract address");
+        require(toContract != address(0) && _isContract(toContract), "Invalid contract address");
 
         _transfer(msg.sender, toContract, tokenId);
 
@@ -439,6 +438,16 @@ contract ComposableERC721 is ISPGNFT, IComposableERC721, ERC721URIStorageUpgrade
         _parentToChildTokens[fromContract][fromTokenId].pop();
         delete _childTokenIndex[tokenId];
     }
+
+    function _isApprovedOrOwner(address spender, uint256 tokenId) internal view returns (bool) {
+    address owner = ownerOf(tokenId);
+        return (spender == owner || getApproved(tokenId) == spender || isApprovedForAll(owner, spender));
+    }
+
+    function _isContract(address account) internal view returns (bool) {
+        return account.code.length > 0;
+    }
+
 
     function childTokensOfParent(address parentContract, uint256 parentTokenId) external view returns (uint256[] memory) {
         return _parentToChildTokens[parentContract][parentTokenId];
