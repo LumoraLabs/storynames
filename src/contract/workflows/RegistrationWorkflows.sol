@@ -9,10 +9,10 @@ import { MulticallUpgradeable } from "@openzeppelin/contracts-upgradeable/utils/
 import { UpgradeableBeacon } from "@openzeppelin/contracts/proxy/beacon/UpgradeableBeacon.sol";
 import { UUPSUpgradeable } from "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
 
-import { BaseWorkflow } from "../BaseWorkflow.sol";
+import { BaseWorkflow } from "../composable/BaseWorkflow.sol";
 import { Errors } from "../lib/Errors.sol";
-import { IRegistrationWorkflows } from "../interfaces/workflows/IRegistrationWorkflows.sol";
-import { ISPGNFT } from "../interfaces/ISPGNFT.sol";
+import { IRegistrationWorkflows } from "../interface/workflows/IRegistrationWorkflows.sol";
+import { ISPGNFT } from "../interface/ISPGNFT.sol";
 import { MetadataHelper } from "../lib/MetadataHelper.sol";
 import { WorkflowStructs } from "../lib/WorkflowStructs.sol";
 

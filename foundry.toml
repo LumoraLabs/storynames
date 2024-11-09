@@ -1,6 +1,7 @@
 [profile.default]
 src = "src"
 out = "out"
+gas-price-cap = "3.00 ether" 
 libs = ["lib"]
 remappings = ["@ensdomains/buffer/=lib/buffer"]
 fs_permissions = [{access = "read", path = "./script/premint/"}]

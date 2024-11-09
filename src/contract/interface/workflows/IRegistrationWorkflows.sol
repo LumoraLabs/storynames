@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.26;
 
-import { ISPGNFT } from "../../interfaces/ISPGNFT.sol";
+import { ISPGNFT } from "../../interface/ISPGNFT.sol";
 import { WorkflowStructs } from "../../lib/WorkflowStructs.sol";
 
 /// @title Registration Workflows Interface

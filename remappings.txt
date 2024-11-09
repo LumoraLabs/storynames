@@ -10,3 +10,4 @@ forge-std/=lib/forge-std/src/
 halmos-cheatcodes/=lib/openzeppelin-contracts-upgradeable/lib/halmos-cheatcodes/src/
 solady/=lib/solady/src/
 verifications/=lib/verifications/src/
+@storyprotocol/core/=lib/protocol-core-v1/contracts/
