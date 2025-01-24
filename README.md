@@ -14,7 +14,7 @@ Storynames enables users to establish on-chain identities, create custom web3 pr
 
 ### OVERVIEW
 
-The Story Name Service (SNS) is a foundational component of the Story Protocol network, providing a flexible and decentralized naming system that empowers creators, brands, and users to:
+The Story Name Service (Storynames) is a foundational component of the Story Protocol network, providing a flexible and decentralized naming system that empowers creators, brands, and users to:
 
 - Claim human-readable .ip names for wallet addresses.
 - Create and license branded assets linked to their .ip identity.
@@ -41,11 +41,12 @@ The system architecture can be functionally organized into three categories:
 2. Creators register their Brand Asset as on-chain IP Assets, represented by NFTs, interacts with various modules to manage functionalities like licensing and royalties.
 3. The Brand IPA is linked to its .ip domain using ComposableSPG contract
 
-![Stornames Architecture](stornames-architecture.png)
+<img width="3748" alt="Architecture" src="https://github.com/user-attachments/assets/b626a1df-89af-4186-a249-c09f71040f67" />
+
 ![Storynames Overall](overall.png)
 ### ARCHITECTURE
 
-The SNS architecture adopts and enhances ENS standards to align with Story Protocol’s requirements. Key components include:
+The Storynames architecture adopts and enhances ENS standards to align with Story Protocol’s requirements. Key components include:
 
 | Contract                | Role                           | Description                                          |
 |-------------------------|--------------------------------|------------------------------------------------------|
@@ -58,7 +59,7 @@ The SNS architecture adopts and enhances ENS standards to align with Story Proto
 | **Exponential Premium Oracle** | Dutch auction pricing  | Sets dynamic prices for expired names.             |
 
 
-The SNS supports additional features, such as promotional discounts, to encourage adoption. Discounts are validated using the following interface:
+The Storynames supports additional features, such as promotional discounts, to encourage adoption. Discounts are validated using the following interface:
 ```solidity
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.23;
