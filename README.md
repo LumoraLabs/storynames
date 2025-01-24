@@ -1,81 +1,64 @@
-![basenames-cover](https://github.com/user-attachments/assets/14f63206-5838-4938-9a84-f9165e431f96)
-# BASENAMES
+![storynames-cover](storynames-cover.png)
+# STORYNAMES
 
+This repository contains code for minting and managing .ip domains using the Story Name Service, the official naming and branding infrastructure of the Story Protocol network.
 
-This repository contains code for minting and managing [ENS](https://docs.ens.domains/) subdomains on the Base network as `base.eth` subdomains. 
+Storynames enables users to establish on-chain identities, create custom web3 profiles, and manage brand IP assets directly within the decentralized Story Protocol ecosystem.
 
-It supports:
-- Registering base.eth subdomains on Base natively
-- Managing the name with a public resolver, allowing an owner or operator to set address records, text records, dns records, etc.
-- ERC721 subdomain tokens [(Opensea)](https://opensea.io/collection/basenames)
+### FEATURES
+
+- **.ip Domain Registration**: Secure a unique .ip domain to establish your on-chain identity or brand presence.
+- **Public Resolver Management**: Set and manage address records, text records, and DNS records using an integrated resolver system.
+- **Custom Branding Integration**: Link your .ip domain with logos, banners, and other brand assets for enhanced identity management.
+- **Tokenized Domains**: Register .ip domains as ERC721 tokens, tradeable on platforms like Color.
 
 ### OVERVIEW
 
-Basenames are a core onchain building block that enables anyone to establish their identity on Base by registering human-readable names for their address(es). They are a fully onchain solution which leverages ENS infrastructure deployed on Base.
+The Story Name Service (SNS) is a foundational component of the Story Protocol network, providing a flexible and decentralized naming system that empowers creators, brands, and users to:
+
+- Claim human-readable .ip names for wallet addresses.
+- Create and license branded assets linked to their .ip identity.
+- Build personalized web3 profiles within the Story ecosystem.
+Story Name Service utilizes a modified implementation of ENS (Ethereum Name Service) technology, optimized for Story Protocol’s branding and identity requirements.
 
 ### CONTRACT ADDRESSES
 
-#### Ethereum Mainnet
-
-| Contract | Address | 
-| -------- | ------- |
-| L1Resolver | [0xde9049636F4a1dfE0a64d1bFe3155C0A14C54F31](https://etherscan.io/address/0xde9049636F4a1dfE0a64d1bFe3155C0A14C54F31#code) |
-
-#### Base Mainnet
+#### Odyssey Testnet
 
 | Contract | Address | 
 | -------- | ------- | 
-| Registry | [0xb94704422c2a1e396835a571837aa5ae53285a95](https://basescan.org/address/0xb94704422c2a1e396835a571837aa5ae53285a95) | 
-| BaseRegistrar | [0x03c4738ee98ae44591e1a4a4f3cab6641d95dd9a](https://basescan.org/address/0x03c4738ee98ae44591e1a4a4f3cab6641d95dd9a) | 
-| RegistrarController | [0x4cCb0BB02FCABA27e82a56646E81d8c5bC4119a5](https://basescan.org/address/0x4cCb0BB02FCABA27e82a56646E81d8c5bC4119a5) |
-| Launch Price Oracle | [0xd53b558e1f07289acedf028d226974abba258312](https://basescan.org/address/0xd53b558e1f07289acedf028d226974abba258312) |
-| Price Oracle | [0x508CFE43aa84b8048cB6d39037cE0dc96d8aDc75](https://basescan.org/address/0x508CFE43aa84b8048cB6d39037cE0dc96d8aDc75) | 
-| ReverseRegistrar | [0x79ea96012eea67a83431f1701b3dff7e37f9e282](https://basescan.org/address/0x79ea96012eea67a83431f1701b3dff7e37f9e282) | 
-| L2Resolver | [0xC6d566A56A1aFf6508b41f6c90ff131615583BCD](https://basescan.org/address/0xC6d566A56A1aFf6508b41f6c90ff131615583BCD) | 
-
-#### Sepolia
-
-| Contract | Address | 
-| -------- | ------- |
-| L1Resolver | [0x084D10C07EfEecD9fFc73DEb38ecb72f9eEb65aB](https://sepolia.etherscan.io/address/0x084D10C07EfEecD9fFc73DEb38ecb72f9eEb65aB) |
-
-#### Base Sepolia
-
-| Contract | Address | 
-| -------- | ------- | 
-| Registry | [0x1493b2567056c2181630115660963E13A8E32735](https://basescan.org/address/0xb94704422c2a1e396835a571837aa5ae53285a95) | 
-| BaseRegistrar | [0x03c4738ee98ae44591e1a4a4f3cab6641d95dd9a](https://sepolia.basescan.org/address/0xa0c70ec36c010b55e3c434d6c6ebeec50c705794#code) | 
-| RegistrarController | [0x49ae3cc2e3aa768b1e5654f5d3c6002144a59581](https://sepolia.basescan.org/address/0x49ae3cc2e3aa768b1e5654f5d3c6002144a59581) |
-| Launch Price Oracle | [0x2B73408052825e17e0Fe464f92De85e8c7723231](https://sepolia.basescan.org/address/0x2B73408052825e17e0Fe464f92De85e8c7723231) |
-| Price Oracle | NOT YET DEPLOYED | 
-| ReverseRegistrar | [0xa0A8401ECF248a9375a0a71C4dedc263dA18dCd7](https://sepolia.basescan.org/address/0xa0A8401ECF248a9375a0a71C4dedc263dA18dCd7) | 
-| L2Resolver | [0x6533C94869D28fAA8dF77cc63f9e2b2D6Cf77eBA](https://sepolia.basescan.org/address/0x6533C94869D28fAA8dF77cc63f9e2b2D6Cf77eBA) | 
+| Registry | [0x18e72142258dC6494C1998835292DbD3a4494565](https://odyssey.storyscan.xyz/address/0x18e72142258dC6494C1998835292DbD3a4494565) | 
+| StoryRegistrar | [0x707d06A17C7f1183530B27995e590eC31cAaE026](https://odyssey.storyscan.xyz/address/0x707d06A17C7f1183530B27995e590eC31cAaE026) | 
+| RegistrarController | [0x8487Fd1b80DA423AaF81B9eab9EAfDD9473FDAbA](https://odyssey.storyscan.xyz/address/0x8487Fd1b80DA423AaF81B9eab9EAfDD9473FDAbA) |
+| Price Oracle | [0x40d8B9B948Ea2fB132A9CA1Ca66D9A38fae5dcaE](https://odyssey.storyscan.xyz/address/0x40d8B9B948Ea2fB132A9CA1Ca66D9A38fae5dcaE) | 
+| ReverseRegistrar | [0xf89592B25D4b07bAbD06566ac95864928Dc55eB7](https://odyssey.storyscan.xyz/address/0xf89592B25D4b07bAbD06566ac95864928Dc55eB7) | 
+| StoryResolver | [0x961f839dB4658Ca8b3dd6f78D4D3aFFfa893B9db](https://odyssey.storyscan.xyz/address/0x961f839dB4658Ca8b3dd6f78D4D3aFFfa893B9db) | 
 
 ## Functional Diagram
 
 The system architecture can be functionally organized into three categories:
-1. An L1 resolver enabling cross-chain resolution for the `base.eth` 2LD.
-2. An ENS-like registry/registrar/resolver system deployed on Base enabling `*.base.eth` subdomains to be registered and managed.
-3. An off-chain gateway for serving CCIP requests required to comply with [ENSIP-10](https://docs.ens.domains/ensip/10). 
+1. The .ip domains can be linked to IP Bramd Assets, enhancing brand recognition and discoverability within the Story Protocol ecosystem.
+2. Creators register their Brand Asset as on-chain IP Assets, represented by NFTs, interacts with various modules to manage functionalities like licensing and royalties.
+3. The Brand IPA is linked to its .ip domain using ComposableSPG contract
 
-![Screenshot 2024-06-16 at 8 51 55 PM](https://github.com/base-org/usernames/assets/84420280/3689dd40-2be0-4a7d-8454-155741a1add0)
-
+![Stornames Architecture](stornames-architecture.png)
+![Storynames Overall](overall.png)
 ### ARCHITECTURE
 
-The core functionality of Base Usernames should look familiar to anyone that's looked under the hood  at the [ENS contracts](https://github.com/ensdomains/ens-contracts/tree/staging). We implement a slimmed down fork of the ENS contracts here.
+The SNS architecture adopts and enhances ENS standards to align with Story Protocol’s requirements. Key components include:
 
-| Contract | Role | ENS Implementation | Base Usernames Implementation |
-| -------- | ----- | ------------------ | ----------------------------- | 
-|[Registry](https://docs.ens.domains/registry/ens)  | Stores [Records](https://github.com/base-org/usernames/blob/c29119fd327b61f896440c317f3dd898e9fa570b/contracts/src/L2/Registry.sol#L7-L11) of subdomains in a flat structure |  [ENSRegistry.sol](https://github.com/ensdomains/ens-contracts/blob/staging/contracts/registry/ENSRegistry.sol) | [Registry.sol](https://github.com/base-org/usernames/blob/master/contracts/src/L2/Registry.sol) |
-| [BaseRegistrar](https://docs.ens.domains/registry/eth) | Tokenizes names,  manages ownership and stores expiry | [BaseRegistrarImplementation.sol](https://github.com/ensdomains/ens-contracts/blob/staging/contracts/ethregistrar/BaseRegistrarImplementation.sol) | [BaseRegistrar.sol](https://github.com/base-org/usernames/blob/master/contracts/src/L2/BaseRegistrar.sol) | 
-| [ReverseRegistrar](https://docs.ens.domains/registry/reverse) | Manages the reverse lookup to allow the setting of "primary" names for an address | [ReverseRegistrar.sol](https://github.com/ensdomains/ens-contracts/blob/staging/contracts/reverseRegistrar/ReverseRegistrar.sol) | [ReverseRegistrar.sol](https://github.com/base-org/usernames/blob/master/contracts/src/L2/ReverseRegistrar.sol) |
-| [L1 Resolver](https://docs.ens.domains/resolvers/ccip-read) | Enables cross-chain, wildcard resolution from L1 | [OffchainResolver.sol](https://github.com/ensdomains/offchain-resolver/blob/main/packages/contracts/contracts/OffchainResolver.sol) | [L1Resolver.sol](https://github.com/base-org/usernames/blob/master/contracts/src/L1/L1Resolver.sol) | 
-| [L2 Resolver](https://docs.ens.domains/resolvers/public) | A standard public resolver for storing records associated with namespaces | [PublicResolver.sol](https://github.com/ensdomains/ens-contracts/blob/staging/contracts/resolvers/PublicResolver.sol) | [L2Resolver.sol](https://github.com/base-org/usernames/blob/master/contracts/src/L2/L2Resolver.sol) | 
-| Registrar Controller | A permissioned contract which manages registration payment | [ETHRegistrarController.sol](https://github.com/ensdomains/ens-contracts/blob/staging/contracts/ethregistrar/ETHRegistrarController.sol) | [RegistrarController.sol](https://github.com/base-org/usernames/blob/master/contracts/src/L2/RegistrarController.sol) |
-| Stable Price Oracle | The source of pricing based on name length and duration of registration | [StablePriceOracle.sol](https://github.com/ensdomains/ens-contracts/blob/staging/contracts/ethregistrar/StablePriceOracle.sol) | [StablePriceOracle.sol](https://github.com/base-org/usernames/blob/master/contracts/src/L2/StablePriceOracle.sol) |
-| Exponential Premium Oracle | A Dutch auction pricing mechanism for fairly pricing names after expiry | [ExponentialPremiumPricingOracle.sol](https://github.com/ensdomains/ens-contracts/blob/staging/contracts/ethregistrar/ExponentialPremiumPriceOracle.sol) | [ExponentialPremiumPricingOracle.sol](https://github.com/base-org/usernames/blob/master/contracts/src/L2/ExponentialPremiumPriceOracle.sol) | 
+| Contract                | Role                           | Description                                          |
+|-------------------------|--------------------------------|------------------------------------------------------|
+| **Registry**            | Manages `.ip` domain records  | Stores records of all registered `.ip` domains.     |
+| **StoryRegistrar**      | Tokenizes `.ip` domains       | Manages ownership and expiration of `.ip` names.    |
+| **ReverseRegistrar**    | Reverse mapping for addresses | Allows assigning primary names to wallet addresses. |
+| **StoryResolver**       | Record storage for `.ip` domains | Stores metadata, DNS, and branding records.       |
+| **RegistrarController** | Domain registration and pricing | Facilitates payment and pricing of domain names.   |
+| **Stable Price Oracle** | Registration pricing          | Calculates prices based on name length and duration.|
+| **Exponential Premium Oracle** | Dutch auction pricing  | Sets dynamic prices for expired names.             |
 
-In addition to replicating the base behavior of the ENS protocol, we are offering a series of promotional discounts associcated with various Coinbase product integrations. As such, the Base Usernames Registrar Controller allows users to perform discounted registrations while passing along integration-specific `validationData`. Each discount leverages a common interface: 
+
+The SNS supports additional features, such as promotional discounts, to encourage adoption. Discounts are validated using the following interface:
 ```solidity
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.23;
@@ -99,7 +82,7 @@ interface IDiscountValidator {
     function isValidDiscountRegistration(address claimer, bytes calldata validationData) external returns (bool);
 }
 ```
-The various implementations can be found [in this directory](https://github.com/base-org/basenames/tree/main/src/L2/discounts). 
+The various implementations can be found [in this directory](https://github.com/LumoraLabs/storynames/tree/main/src/contract/discounts). 
 
 ## Usage
 
