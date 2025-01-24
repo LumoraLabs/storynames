@@ -10,13 +10,14 @@ contract AddDiscountValidator is Script {
         vm.startBroadcast(deployerPrivateKey);
 
         ////////////////////////////////////////////////
-        bytes32 key = keccak256("erc1155.discount.validator");
-        RegistrarController.DiscountDetails memory details = RegistrarController.DiscountDetails({
-            active: true,
-            discountValidator: vm.envAddress("ERC1155_DISCOUNT_VALIDATOR"),
-            key: key,
-            discount: 0.001 ether
-        });
+        bytes32 key = keccak256("styreal.discount.validator");
+        RegistrarController.DiscountDetails memory details = RegistrarController
+            .DiscountDetails({
+                active: true,
+                discountValidator: vm.envAddress("DISCOUNT_VALIDATOR"),
+                key: key,
+                discount: 0.15 ether
+            });
         ////////////////////////////////////////////////
 
         address controllerAddr = vm.envAddress("REGISTRAR_CONTROLLER_ADDR");

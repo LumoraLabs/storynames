@@ -11,11 +11,13 @@ contract DeployERC721DiscountValidator is Script {
         address deployerAddr = vm.addr(deployerPrivateKey);
         vm.startBroadcast(deployerPrivateKey);
 
-        address token = 0x5cc93d8Ef014bDBa08297C181eF0480AFa163995;
+        address token = 0x22Da4cBdd97548AEF478E8f2FF5c7eEAe6E540fB;
         console.log("ERC721 token address:");
         console.log(token);
 
-        ERC721DiscountValidator validator = new ERC721DiscountValidator(address(token));
+        ERC721DiscountValidator validator = new ERC721DiscountValidator(
+            address(token)
+        );
 
         console.log("Discount Validator deployed to:");
         console.log(address(validator));

@@ -10,7 +10,7 @@ contract DeployComposableSPGFactory is Script {
     address constant GROUPING_WORKFLOWS_ADDRESS = 0xcd754994eBE5Ce16D432C1f936f98ac0d4aABA0e;
     address constant LICENSE_ATTACHMENT_WORKFLOWS_ADDRESS = 0x44Bad1E4035a44eAC1606B222873E4a85E8b7D9c;
     address constant REGISTRATION_WORKFLOWS_ADDRESS = 0xde13Be395E1cd753471447Cf6A656979ef87881c;
-    address constant STORYNAME_ADDRESS = 0x5cc93d8Ef014bDBa08297C181eF0480AFa163995;
+    address constant STORYNAME_ADDRESS = 0x707d06A17C7f1183530B27995e590eC31cAaE026;
 
     function run() external {
         // Load the deployer wallet private key from the .env file

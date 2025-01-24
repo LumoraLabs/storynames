@@ -14,10 +14,10 @@ contract DeployPriceOracle is Script {
         uint256[] memory prices = new uint256[](6);
         prices[0] = 316_808_781_402;
         prices[1] = 316_808_781_402;
-        prices[2] = 31_680_878_140;
-        prices[3] = 3_168_087_814;
-        prices[4] = 316_808_781;
-        prices[5] = 31_680_878; // 3,168,808.781402895 = 1e14 / (365.25 * 24 * 3600)
+        prices[2] = 158_548_959_918;
+        prices[3] = 15_854_895_991;
+        prices[4] = 9_512_937_594;
+        prices[5] = 6_512_937_594; // 3,168,808.781402895 = 1e14 / (365.25 * 24 * 3600)
         uint256 premiumStart = 10000 ether;
         uint256 totalDays = 8 days;
 

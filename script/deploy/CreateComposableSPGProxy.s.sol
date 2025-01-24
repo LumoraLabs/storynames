@@ -19,14 +19,14 @@ contract CreateComposableSPGProxy is Script {
 
         // Set the parameters for the new ComposableSPG instance
         ISPGNFT.InitParams memory initParams = ISPGNFT.InitParams({
-            name: "MyComposableSPG",
-            symbol: "MCSPG",
-            baseURI: "https://example.com/metadata/",
-            contractURI: "https://example.com/contract-metadata",
-            maxSupply: 10000,
-            mintFee: 0.01 ether,
-            mintFeeToken: 0xC0F6E387aC0B324Ec18EAcf22EE7271207dCE3d5, // Set to a token address if minting requires an ERC20 token
-            mintFeeRecipient: 0x369Abe773328A9Aa2bb48B0D6F7D4bca58959EAb, // Replace with actual recipient address
+            name: "Storynames Logo",
+            symbol: "NSLOGO",
+            baseURI: "https://api.storyname.space/metadata/",
+            contractURI: "https://rose-occupational-bee-58.mypinata.cloud/ipfs/QmQp6dssRXAixVnruoDE1tUbMFbKF5dtM6L3yq9gfJNTYu",
+            maxSupply: 1000000000,
+            mintFee: 0,
+            mintFeeToken: 0x0000000000000000000000000000000000000000, // Set to a token address if minting requires an ERC20 token
+            mintFeeRecipient: 0x0000000000000000000000000000000000000000, // Replace with actual recipient address
             owner: 0x369Abe773328A9Aa2bb48B0D6F7D4bca58959EAb, // Set the contract owner as the transaction sender
             mintOpen: true,
             isPublicMinting: true

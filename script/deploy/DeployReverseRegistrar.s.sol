@@ -19,12 +19,12 @@ contract DeployReverseRegistrar is Script {
         ReverseRegistrar revRegstrar = new ReverseRegistrar(
             Registry(ensAddress),
             deployerAddress, // deployer as owner
-            IP_REVERSE_NODE
+            ADDR_REVERSE_NODE
         );
 
-        // establish the reverse registrar as the owner of the 'ip.reverse' node
+        // establish the reverse registrar as the owner of the 'addr.reverse' node
         bytes32 reverseLabel = keccak256("reverse");
-        bytes32 storyReverseLabel = keccak256("ip");
+        bytes32 storyReverseLabel = keccak256("addr");
         registry.setSubnodeOwner(0x0, reverseLabel, deployerAddress);
         registry.setSubnodeOwner(REVERSE_NODE, storyReverseLabel, address(revRegstrar));
 

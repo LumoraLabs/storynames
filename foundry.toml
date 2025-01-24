@@ -8,5 +8,5 @@ fs_permissions = [{access = "read", path = "./script/premint/"}]
 
 [rpc_endpoints]
 iliad="${IP_ILIAD_URL}"
-base-sepolia="${BASE_SEPOLIA_RPC_URL}"
+odyssey="${ODYSSEY_RPC_URL}"
 
